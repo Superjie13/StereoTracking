@@ -6,6 +6,10 @@ Our code is based on the [mmTracking](https://github.com/open-mmlab/mmtracking/t
 ## Introduction
 we present StereoTracking, a novel detection-based tracking framework specifically designed to enhance the perception and tracking of airborne targets by leveraging depth cues from stereo vision systems. The key components includes a Multi-modal Detector, Local-to-Global Motion Field Estimation, Adaptive Truncated Mean (ATM), and Distance-aware Online Scaling (DAOS), which can be seamlessly integrate into existing tracking systems and work synergistically to enhance detection performance, compensate for camera motion, and adapt to varying target distances.
 
+<div align="center">
+<img src="src/overall_architecture.jpg" width=90% alt="overall_architecture"/>
+</div>
+
 ## Installation
 ```shell
 conda create -n stereoTracking python=3.9.0 pip=22.2.2
@@ -31,7 +35,14 @@ pip install git+https://github.com/JonathonLuiten/TrackEval.git
 - GPU RTX 4090 (24G)
 
 ## AirSim-Drone Dataset
-Please download our dataset from [here]() and build a soft link to the data folder.  
+<div align="center">
+<img src="src/obstacles.png" width=70% alt="obstacles"/>
+</div>
+
+Please download our dataset from the link below, unzip the left/right nested zips, and and build a soft link to the data folder.
+- Sample of 1 sequence: [download (1.6 GB)](https://airdrone.s3.ap-northeast-1.amazonaws.com/airdrone_sample.zip)
+- Video previews of all sequences: [download (330 MB)](https://airdrone.s3.ap-northeast-1.amazonaws.com/airdrone_previews.zip)
+- Full dataset, 64 sequences: [download (141 GB)](https://airdrone.s3.ap-northeast-1.amazonaws.com/airdrone_full.zip)
 
 ### Annotation
 Annotation format is similar to MOT-Challenge: 
@@ -48,6 +59,7 @@ We provide the coco-style annotation in the `annotations` folder for simple usag
 mkdir data
 ln -s /path/to/your/dataset data/
 ```
+
 ### Data Structure
 ```
 data
@@ -72,6 +84,13 @@ data
 |   |  |  ├── right
 |   |  |  ├── ...
 ```
+
+### Position Statistics
+We provide the position statistics of training and validation set in our AirSim-Drone dataset. 
+
+<div align="center">
+<img src="src/position_statistics.jpg" width=50% alt="obstacles"/>
+</div> 
 
 ## Testing
 To test the StereoTracking on the AirSim-Drone dataset, download the pretrained model from [here](https://drive.google.com/file/d/1-GanvZtTk11YQpa_lg4sBjHiKLdSSZDB/view?usp=drive_link) and run the following command:
