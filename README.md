@@ -35,6 +35,11 @@ pip install git+https://github.com/JonathonLuiten/TrackEval.git
 - GPU RTX 4090 (24G)
 
 ## AirSim-Drone Dataset
+<center class="half">
+<img src="src/dataset1.png" width=300/>
+<img src="src/dataset2.png" width=300/>
+</center>
+
 <div align="center">
 <img src="src/obstacles.png" width=70% alt="obstacles"/>
 </div>
@@ -108,3 +113,8 @@ python tools/train.py \
 configs/stereo_tracking/ocsort/yolox_s_mmyolo_mot_airsim_drone_disp.py \
 --work-dir [path/to/your/workdir]
 ```
+
+## A toy video from `Drone-vs-Bird` dataset.
+To show the effectiveness of our LGME. We provide a toy video from the [`drone-vs-bird`](https://github.com/wosdetc/challenge) dataset. 
+
+<video controls src="src/drone.mp4" title="Title"></video>
