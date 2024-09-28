@@ -35,10 +35,12 @@ pip install git+https://github.com/JonathonLuiten/TrackEval.git
 - GPU RTX 4090 (24G)
 
 ## AirSim-Drone Dataset
-<center class="half">
-<img src="src/dataset1.png" width=300/>
-<img src="src/dataset2.png" width=300/>
-</center>
+<div align="center">
+<p float="left">
+  <img src="src/dataset1.png" width="45%" />
+  <img src="src/dataset2.png" width="45%" />
+</p>
+</div>
 
 <div align="center">
 <img src="src/obstacles.png" width=70% alt="obstacles"/>
