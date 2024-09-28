@@ -119,4 +119,4 @@ configs/stereo_tracking/ocsort/yolox_s_mmyolo_mot_airsim_drone_disp.py \
 ## A toy video from `Drone-vs-Bird` dataset.
 To show the effectiveness of our LGME. We provide a toy video from the [`drone-vs-bird`](https://github.com/wosdetc/challenge) dataset. 
 
-<video controls src="src/drone.mp4" title="Title"></video>
+https://github.com/user-attachments/assets/b57d0d8a-2410-4195-a777-edfe0d42495c
