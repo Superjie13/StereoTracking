@@ -116,6 +116,11 @@ configs/stereo_tracking/ocsort/yolox_s_mmyolo_mot_airsim_drone_disp.py \
 --work-dir [path/to/your/workdir]
 ```
 
+## Export to ONNX
+To convert the StereoTracking model to ONNX, you can refer to [ONNX Model Export](https://github.com/Superjie13/YOLOX-Deploy-Test---multi-modal-inputs/tree/master#onnx-model-export) in the `YOLOX-Deploy-Test---multi-modal-inputs` repository.
+
+Note: StereoTracking model is trained with the 'mmtracking' framework, to export the detection model, you need to first extract the 'detector' part from the model and then export it to ONNX.
+
 ## A toy video from `Drone-vs-Bird` dataset.
 To show the effectiveness of our methods even without depth information, i.e., only leveraging our LGME. We provide a toy video from the [`drone-vs-bird`](https://github.com/wosdetc/challenge) dataset. 
 
