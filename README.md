@@ -10,6 +10,14 @@ we present StereoTracking, a novel detection-based tracking framework specifical
 <img src="src/overall_architecture.jpg" width=90% alt="overall_architecture"/>
 </div>
 
+## Getting Started
+- [Installation](#installation)
+- [AirSim-Drone Dataset](#airsim-drone-dataset)
+- [Testing](#testing)
+- [Training](#training)
+- [Export to ONNX](#export-to-onnx)
+- [A toy video from `Drone-vs-Bird` dataset](#a-toy-video-from-drone-vs-bird-dataset)
+
 ## Installation
 ```shell
 conda create -n stereoTracking python=3.9.0 pip=22.2.2
