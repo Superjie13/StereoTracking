@@ -54,10 +54,11 @@ pip install git+https://github.com/JonathonLuiten/TrackEval.git
 <img src="src/obstacles.png" width=70% alt="obstacles"/>
 </div>
 
-Please download our dataset from the link below, unzip the left/right nested zips, and and build a soft link to the data folder.
-- Sample of 1 sequence: [download (1.6 GB)](https://airdrone.s3.ap-northeast-1.amazonaws.com/airdrone_sample.zip)
-- Video previews of all sequences: [download (330 MB)](https://airdrone.s3.ap-northeast-1.amazonaws.com/airdrone_previews.zip)
-- Full dataset, 64 sequences: [download (141 GB)](https://airdrone.s3.ap-northeast-1.amazonaws.com/airdrone_full.zip)
+Please download our dataset from the link below ([all files](https://www.dropbox.com/scl/fo/cr05dzx92gypix5llssxs/AJ7sgbbKq5YH2nDXjm-d4vU?rlkey=nalxfw8hdo8kgjr0hhtq2ztzv&dl=0)), unzip the left/right nested zips, and and build a soft link to the data folder.
+- Sample of 1 sequence: [download (1.6 GB)](https://www.dropbox.com/scl/fo/cr05dzx92gypix5llssxs/AJ7sgbbKq5YH2nDXjm-d4vU?dl=0&e=1&preview=airdrone_sample.zip&rlkey=nalxfw8hdo8kgjr0hhtq2ztzv)
+- Video previews of all sequences: [download (330 MB)](https://www.dropbox.com/scl/fo/cr05dzx92gypix5llssxs/ANlwRPaoSLBzBnN7ueG2IGs/airdrone_previews.zip?rlkey=nalxfw8hdo8kgjr0hhtq2ztzv&e=1&dl=0)
+- Full dataset, 64 sequences: [download (141 GB, 15 files)](https://www.dropbox.com/scl/fo/cr05dzx92gypix5llssxs/AJ2EEUWKVjV7ukKI-AYvtiY/airdrone_full?dl=0&rlkey=nalxfw8hdo8kgjr0hhtq2ztzv&subfolder_nav_tracking=1)
+  - To unzip, place all folders in the same dir, then run `zip -FF airdrone_full.zip --out airdrone_full_all.zip; unzip -FF airdrone_full_all.zip`. This will create a 141 GB contiguous file, and then unzip it, requiring 425 GB of space. Alternatively, use 7-Zip to avoid generating the contiguous copy of the zip.
 
 ### Annotation
 Annotation format is similar to MOT-Challenge: 
