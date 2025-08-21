@@ -79,7 +79,7 @@ ln -s /path/to/your/dataset data/
 ### Data Structure
 ```
 data
-├── AirSim_drone
+├── AirDrone
 │   ├── annotations
 │   |  ├── train_cocoformat_[xx].json
 │   |  ├── val_cocoformat_[xx].json
@@ -102,18 +102,18 @@ data
 ```
 
 ### Position Statistics
-We provide the position statistics of training and validation set in our AirSim-Drone dataset. 
+We provide the position statistics of training and validation set in our AirDrone dataset. 
 
 <div align="center">
 <img src="src/position_statistics.jpg" width=50% alt="obstacles"/>
 </div> 
 
 ## Testing
-To test the StereoTracking on the AirSim-Drone dataset, download the pretrained model from [here](https://drive.google.com/file/d/1-GanvZtTk11YQpa_lg4sBjHiKLdSSZDB/view?usp=drive_link) and run the following command:
+To test the StereoTracking on the AirDrone dataset, download the pretrained model from [here](https://drive.google.com/file/d/1-GanvZtTk11YQpa_lg4sBjHiKLdSSZDB/view?usp=drive_link) and run the following command:
 ```shell
 
 python tools/test.py \
-  configs/stereo_tracking/ocsort/yolox_s_mmyolo_mot_airsim_drone_disp.py \
+  configs/stereo_tracking/ocsort/yolox_s_mmyolo_mot_airdrone_disp.py \
   --checkpoint [path/to/checkpoint] \
   --work-dir [path/to/your/workdir]
 ```
@@ -121,7 +121,7 @@ python tools/test.py \
 ## Training
 ```shell
 python tools/train.py \
-configs/stereo_tracking/ocsort/yolox_s_mmyolo_mot_airsim_drone_disp.py \
+configs/stereo_tracking/ocsort/yolox_s_mmyolo_mot_airdrone_disp.py \
 --work-dir [path/to/your/workdir]
 ```
 
