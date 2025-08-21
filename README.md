@@ -16,7 +16,7 @@ we present StereoTracking, a novel detection-based tracking framework specifical
 - [Testing](#testing)
 - [Training](#training)
 - [Export to ONNX](#export-to-onnx)
-- [A toy video from `Drone-vs-Bird` dataset](#a-toy-video-from-drone-vs-bird-dataset)
+- [Demos from `Drone-vs-Bird` dataset](#demos-from-drone-vs-bird-dataset)
 
 ## Installation
 ```shell
@@ -133,7 +133,20 @@ Note: StereoTracking model is trained with the 'mmtracking' framework, to export
 python tools/utils/extract_det_model.py path/to/checkpoint
 ``` 
 
-## A toy video from `Drone-vs-Bird` dataset.
+## Demos from `Drone-vs-Bird` dataset.
 To show the effectiveness of our methods even without depth information, i.e., only leveraging our LGME. We provide a toy video from the [`drone-vs-bird`](https://github.com/wosdetc/challenge) dataset. 
 
-https://github.com/user-attachments/assets/b57d0d8a-2410-4195-a777-edfe0d42495c
+#### Demo1
+<p align="center">
+  <video src="src/Demo1.mp4" controls style="width:80%; max-width:800px;"></video>
+</p>
+
+#### Demo2
+<p align="center">
+  <video src="src/Demo2.mp4" controls style="width:80%; max-width:800px;"></video>
+</p>
+
+#### Demo3
+<p align="center">
+  <video src="src/Demo3.mp4" controls style="width:80%; max-width:800px;"></video>
+</p>
