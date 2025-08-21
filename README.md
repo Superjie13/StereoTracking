@@ -12,7 +12,7 @@ we present StereoTracking, a novel detection-based tracking framework specifical
 
 ## Getting Started
 - [Installation](#installation)
-- [AirSim-Drone Dataset](#airsim-drone-dataset)
+- [AirDrone Dataset](#airdrone-dataset)
 - [Testing](#testing)
 - [Training](#training)
 - [Export to ONNX](#export-to-onnx)
@@ -42,7 +42,7 @@ pip install git+https://github.com/JonathonLuiten/TrackEval.git
 - PyTorch 1.13.1
 - GPU RTX 4090 (24G)
 
-## AirSim-Drone Dataset
+## AirDrone Dataset
 <div align="center">
 <p float="left">
   <img src="src/dataset1.png" width="45%" />
