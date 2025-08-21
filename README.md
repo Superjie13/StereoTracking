@@ -133,8 +133,33 @@ Note: StereoTracking model is trained with the 'mmtracking' framework, to export
 python tools/utils/extract_det_model.py path/to/checkpoint
 ``` 
 
-## Demos from `Drone-vs-Bird` dataset.
-To show the effectiveness of our methods even without depth information, i.e., only leveraging our LGME. We provide a toy video from the [`drone-vs-bird`](https://github.com/wosdetc/challenge) dataset. 
+## Demo on `Drone-vs-Bird` dataset.
+To show the effectiveness of our methods. We Train and test our StereoTracking model on the [`Drone-vs-Bird`](https://github.com/wosdetc/challenge) dataset. 
+
+### Sequence names for train and val
+Below names are sequences with only one drone in the scene, we use these videos evaluating detection and tracking performance of our StereoTracking. We generate corresponding metric depth maps from the original RGB frames using monocular depth estimation algorithm [DepthAnythingV2](https://github.com/DepthAnything/Depth-Anything-V2), and then split each sequence in half, using the first portion for training and the second for validation. 
+```
+dji_mavick_close_buildings
+dji_phantom_mountain_cross
+gopro_004
+gopro_005
+GOPR5842_002
+GOPR5842_005
+GOPR5842_007
+GOPR5844_002
+GOPR5844_004
+GOPR5845_001
+GOPR5845_004
+GOPR5846_002
+GOPR5846_005
+GOPR5847_003
+GOPR5847_004
+GOPR5848_002
+GOPR5848_004
+dji_matrice_210_hillside
+dji_matrice_210_mountain
+dji_mavick_mountain
+```
 
 #### Demo1
 https://github.com/user-attachments/assets/4f561bf4-6827-4ac1-9a1f-f132981b59ec
