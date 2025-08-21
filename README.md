@@ -137,16 +137,10 @@ python tools/utils/extract_det_model.py path/to/checkpoint
 To show the effectiveness of our methods even without depth information, i.e., only leveraging our LGME. We provide a toy video from the [`drone-vs-bird`](https://github.com/wosdetc/challenge) dataset. 
 
 #### Demo1
-<p align="center">
-  <video src="src/Demo1.mp4" controls style="width:80%; max-width:800px;"></video>
-</p>
+https://github.com/user-attachments/assets/4f561bf4-6827-4ac1-9a1f-f132981b59ec
 
 #### Demo2
-<p align="center">
-  <video src="src/Demo2.mp4" controls style="width:80%; max-width:800px;"></video>
-</p>
+https://github.com/user-attachments/assets/9622f945-e29d-4a68-bd23-069feca45500
 
 #### Demo3
-<p align="center">
-  <video src="src/Demo3.mp4" controls style="width:80%; max-width:800px;"></video>
-</p>
+https://github.com/user-attachments/assets/62383861-351f-4daa-8677-f79b4a7fc6c8
