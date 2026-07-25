@@ -13,9 +13,9 @@ This section summarizes the dataset splits, preprocessing parameters, model hype
 | Evaluation split | 45 complete sequences, 10,975 stereo pairs | Second temporal half of each annotated sequence | Second temporal half of each selected sequence |
 | Split principle | Fixed sequence-level split; no sequence or frame overlap between training and evaluation | Temporal split following the adopted benchmark protocol | Temporal split of each selected single-UAV sequence |
 | Input resolution | \(1280 \times 720\) | \(1600 \times 576\) | \(1280 \times 720\) |
-| Original acquisition rate | 60 Hz | Dataset default | Dataset default |
+| Original acquisition rate | 30 Hz | Dataset default | Dataset default |
 | MOT evaluation rate | 10 fps | 10 fps | 10 fps |
-| Depth source | StereoSGBM disparity and simulator ground-truth depth | Stereo images | Metric depth generated using DepthAnythingV2 |
+| Depth source | StereoSGBM disparity and simulator ground-truth depth | Stereo images | monocularly estimated depth using DepthAnythingV2 |
 | AirDrone camera baseline | 0.25 m | Dataset calibration | Not applicable |
 | AirDrone camera field of view | \(90^\circ\) | Dataset calibration | Dataset default |
 | AirDrone evaluation depth range | 0–80 m | Dataset-specific evaluation | Dataset-specific evaluation |
@@ -172,7 +172,7 @@ following fixed configuration.
 |---|---:|
 | OpenCV function | `cv2.StereoSGBM_create` |
 | `minDisparity` | 0 |
-| `numDisparities` | 96 |
+| `numDisparities` | 48 |
 | `blockSize` | 3 |
 | `P1` | 96 |
 | `P2` | 384 |
@@ -207,7 +207,7 @@ tracking results without rerunning stereo matching.
 | `iterations` | 3 |
 | `poly_n` | 5 |
 | `poly_sigma` | 1.1 |
-| Directional-consistency threshold \(\tau_1\) | 70% |
+| Directional-consistency threshold \(\tau_1\) | 60% |
 | Minimum valid-flow ratio \(\tau_2\) | 60% |
 | Mesh-flow aggregation | Median flow within each grid cell |
 | Background-motion estimation | Mean of valid mesh flows |
