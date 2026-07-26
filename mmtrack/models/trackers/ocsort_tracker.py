@@ -12,12 +12,13 @@ from mmdet.structures.bbox import bbox_overlaps
 from mmtrack.structures.bbox import bbox_cxcyah_to_xyxy, bbox_xyxy_to_cxcyah
 from mmtrack.registry import MODELS
 from mmtrack.utils import OptConfigType, imrenormalize
-from .sort_tracker import SORTTracker
+from .kalman_tracker_base import KalmanTrackerBase
+from .gmc import apply_gmc_to_tracks_cxcyah, glme_affine_warp
 import cv2
 
 
 @MODELS.register_module()
-class OCSORTTracker(SORTTracker):
+class OCSORTTracker(KalmanTrackerBase):
     """Tracker for OC-SORT.
 
     Args:
@@ -47,6 +48,7 @@ class OCSORTTracker(SORTTracker):
                  num_tentatives=3,
                  vel_consist_weight=0.2,
                  vel_delta_t=3,
+                 cmc=None,
                  **kwargs):
         super().__init__(**kwargs)
         self.obj_score_thr = obj_score_thr
@@ -58,6 +60,42 @@ class OCSORTTracker(SORTTracker):
         self.vel_delta_t = vel_delta_t
 
         self.num_tentatives = num_tentatives
+
+        # Mesh-Affine CMAC camera-motion compensation. ``cmc=None`` disables
+        # it; ``cmc=dict(method='glme_affine', glme=dict(...))`` estimates a
+        # 4-DoF background affine per frame and applies it to every track's
+        # persistent Kalman state right after the prediction step.
+        self.cmc_cfg = cmc
+        method = cmc.get('method') if cmc is not None else None
+        if method is None:
+            self.cmc_mode = None
+        elif method == 'glme_affine':
+            self.cmc_mode = 'mesh_affine'
+        else:
+            raise ValueError(f"Unknown cmc method '{method}', expected "
+                             "'glme_affine' or None.")
+        self.prev_cmc_img = None
+
+    @property
+    def with_cmc(self) -> bool:
+        """bool: whether Mesh-Affine camera-motion compensation is enabled."""
+        return self.cmc_mode is not None
+
+    def reset_cmc(self) -> None:
+        """Forget the previous frame (called on the first frame of a video)."""
+        self.prev_cmc_img = None
+
+    def estimate_camera_motion(self, img, metainfo):
+        """Return the 2x3 background affine for this frame, or ``None``."""
+        warp = None
+        if self.cmc_mode == 'mesh_affine':
+            warp = glme_affine_warp(
+                curr_img=img,
+                prev_img=self.prev_cmc_img,
+                metainfo=metainfo,
+                glme_kwargs=self.cmc_cfg.get('glme', None))
+        self.prev_cmc_img = img
+        return warp
 
     @property
     def unconfirmed_ids(self):
@@ -335,6 +373,7 @@ class OCSORTTracker(SORTTracker):
         frame_id = metainfo.get('frame_id', -1)
         if frame_id == 0:
             self.reset()
+            self.reset_cmc()
         if not hasattr(self, 'kf'):
             self.kf = model.motion
 
@@ -369,6 +408,11 @@ class OCSORTTracker(SORTTracker):
             # print('  num: ', len(det_ids))
 
             # 1. predict by Kalman Filter
+            # Estimate this frame's background motion once, then apply it
+            # to every track's Kalman state right after predict (below).
+            warp_matrix = self.estimate_camera_motion(img, metainfo) \
+                if self.with_cmc else None
+
             for id in self.confirmed_ids:
                 # track is lost in previous frame
                 if self.tracks[id].frame_ids[-1] != frame_id - 1:
@@ -380,6 +424,10 @@ class OCSORTTracker(SORTTracker):
                 (self.tracks[id].mean,
                  self.tracks[id].covariance) = self.kf.predict(
                      self.tracks[id].mean, self.tracks[id].covariance)
+
+            if warp_matrix is not None:
+                apply_gmc_to_tracks_cxcyah(self.tracks, self.confirmed_ids,
+                                           warp_matrix)
 
             # 2. match detections and tracks' predicted locations
             match_track_inds, raw_match_det_inds = self.ocm_assign_ids(
