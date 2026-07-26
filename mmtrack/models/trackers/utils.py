@@ -5,36 +5,7 @@ import torch
 
 def GLME_affine(curr_img, prev_img, metainfo, step=16, winsize=31,
 				ransac_thr=5.0, min_inlier_ratio=0.3):
-	"""Mesh-Affine CMAC: dense flow -> per-cell median mesh flows -> robust
-	4-DoF affine fit.
-
-	This keeps CMAC's identity (dense Farneback flow partitioned into an
-	``m x n`` grid with a per-cell **median** mesh flow rejecting foreground)
-	but replaces the translation-only averaging back-end with a RANSAC
-	``estimateAffinePartial2D`` fit over the mesh-flow correspondences, so
-	camera **rotation and scale** -- which the direction-consistency filter of
-	plain GLME is structurally blind to -- are recovered as well. The returned
-	affine is meant to be applied to the Kalman states exactly like the sparse
-	CMC warp.
-
-	Args:
-		step (int): Mesh cell size in the resized (255x255) frame. Defaults
-			to 16 (a ~15x15 mesh, as in plain GLME).
-		winsize (int): Farneback window. Smaller than plain GLME's 128 so the
-			flow field keeps the *spatial variation between cells* that
-			encodes rotation/scale; ~2x the cell size a priori. Defaults 31.
-		ransac_thr (float): RANSAC reprojection threshold in original-image
-			pixels; 5.0 corresponds to ~1px flow noise under the ~5x upscale
-			from the 255px estimation frame. Not tuned.
-		min_inlier_ratio (float): Reliability gate (the paper's tau2 concept):
-			the fit is trusted only if this fraction of mesh cells are RANSAC
-			inliers. Defaults to 0.3.
-
-	Returns:
-		tuple: ``(H, inlier_ratio)`` where ``H`` is a 2x3 affine mapping
-		previous-frame to current-frame coordinates in the original image
-		scale, or ``None`` when the estimate is unreliable.
-	"""
+	"""Mesh-Affine CMAC: dense flow."""
 	curr_img = np.transpose(curr_img, (2, 3, 1, 0)).squeeze(-1).astype(np.uint8)
 	prev_img = np.transpose(prev_img, (2, 3, 1, 0)).squeeze(-1).astype(np.uint8)
 

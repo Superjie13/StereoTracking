@@ -133,10 +133,6 @@ class OCSORT_Disparity(OCSORT):
         # depth = bl * f / disparity
         return self.baseline * self.focal_length / (disp + 1e-6)
 
-    # @truncated_mean_decorator
-    # @mean_decorator
-    # @median_decorator
-    # @center_decorator
     def extract_depth(self, depth, bboxes):
         depth = depth.cpu().numpy().squeeze()
         values = []
@@ -169,20 +165,10 @@ class OCSORT_Disparity(OCSORT):
             if len(d_seg) == 0:
                 d_seg = d_sorted[:-1]
             d = np.mean(d_seg)
-            # if sum([v_tl, v_tr, v_bl, v_br] > d_mid) >= 2:
-            #     d_seg = d_sorted[int(0.3 * len_d): int(0.4 * len_d)]
-            #     if len(d_seg) == 0:
-            #         d_seg = d_sorted[:-1]
-            #     d = np.mean(d_seg)
-            # else:
-            #     d_seg = d_sorted[int(0.6 * len_d): int(0.7 * len_d)]
-            #     if len(d_seg) == 0:
-            #         d_seg = d_sorted[:-1]
-            #     d = np.mean(d_seg)
 
             values.append(d)
 
-            scale = min(d * d / 400, 3.)  # scale mustn't larger than 3.
+            scale = min(d * d / 1, 3.)  # scale mustn't larger than 3.
             scale = max(scale, 1.)  # scale must larger than 1.
             scales.append(scale)
 
