@@ -1,10 +1,10 @@
 ## StereoTracking
-This repository is an implementation of the StereoTracking presented in the paper "Drone-based Depth-Aware Airborne Object Detection and Tracking"
+This repository is an implementation of the StereoTracking presented in the paper "Depth-Guided Multi-Object Tracking for Small Airborne Objects Using Stereo Vision"
 
 Our code is based on the [mmTracking](https://github.com/open-mmlab/mmtracking/tree/1.x).
 
 ## Introduction
-we present StereoTracking, a novel detection-based tracking framework specifically designed to enhance the perception and tracking of airborne targets by leveraging depth cues from stereo vision systems. The key components includes a Multi-modal Detector, Local-to-Global Motion Field Estimation, Adaptive Truncated Mean (ATM), and Distance-aware Online Scaling (DAOS), which can be seamlessly integrate into existing tracking systems and work synergistically to enhance detection performance, compensate for camera motion, and adapt to varying target distances.
+Safe UAV encounters require not only detecting nearby airborne objects but also maintaining their identities under severe scale variation, uncertain target motion, and strong ego-motion. Depth cues provide explicit geometric information about target distance, yet they have rarely been systematically integrated into both object detection and identity association for airborne multi-object tracking. We propose StereoTracking, a depth-guided framework for tracking small airborne objects, with calibrated stereo vision serving as the primary means of depth acquisition.
 
 <div align="center">
 <img src="src/overall_architecture.jpg" width=90% alt="overall_architecture"/>
