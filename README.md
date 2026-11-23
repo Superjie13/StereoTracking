@@ -16,7 +16,7 @@ Safe UAV encounters require not only detecting nearby airborne objects but also 
 - [Testing](#testing)
 - [Training](#training)
 - [Export to ONNX](#export-to-onnx)
-- [Demos from `Drone-vs-Bird` dataset](#demos-from-drone-vs-bird-dataset)
+- [Demo on `Drone-vs-Bird` dataset](#demo-on-drone-vs-bird-dataset)
 
 ## Installation
 ```shell
@@ -176,10 +176,16 @@ python tools/utils/extract_det_model.py path/to/checkpoint
 ``` 
 
 ## Demo on `Drone-vs-Bird` dataset.
-To show the effectiveness of our methods. We Train and test our StereoTracking model on the [`Drone-vs-Bird`](https://github.com/wosdetc/challenge) dataset. 
 
-### Sequence names for train and val
-Below names are sequences with only one drone in the scene, we use these videos evaluating detection and tracking performance of our StereoTracking. We generate corresponding metric depth maps from the original RGB frames using monocular depth estimation algorithm [DepthAnythingV2](https://github.com/DepthAnything/Depth-Anything-V2), and then split each sequence in half, using the first portion for training and the second for validation. 
+The original Drone-vs-Bird dataset provides detection boxes and has no tracking identity annotations. We manually selected a subset of 20 sequences for single-UAV tracking, and provide the corresponding identity annotations.
+
+1. **Sequence selection.** We manually reviewed the 77 source sequences and selected 20 for single-UAV tracking. The primary criterion was whether one UAV could be followed throughout the sequence. Each selected sequence has at most one UAV box per frame after curation.
+2. **Identity annotation.** We use the original coordinates of the retained UAV boxes and assign track ID `0` within each sequence. The converted files use the MOTChallenge ground-truth layout.
+3. **Depth generation.** We estimate relative depth from the original RGB frames using Depth Anything V2 and apply min–max normalization to `[0, 1]` within each frame. [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2)
+4. **Training and validation.** We use the first half of each sequence for training and the second half for validation because the dataset has no official MOT split.
+
+### Selected sequences
+
 ```
 dji_mavick_close_buildings
 dji_phantom_mountain_cross
@@ -202,6 +208,48 @@ dji_matrice_210_hillside
 dji_matrice_210_mountain
 dji_mavick_mountain
 ```
+
+### Ground-truth files
+
+| Sequence | Frames | UAV boxes |
+| --- | ---: | ---: |
+| [dji_mavick_close_buildings](annotations/Drone-vs-Bird/dji_mavick_close_buildings/gt/gt.txt) | 1,501 | 1,501 |
+| [dji_phantom_mountain_cross](annotations/Drone-vs-Bird/dji_phantom_mountain_cross/gt/gt.txt) | 3,893 | 3,648 |
+| [gopro_004](annotations/Drone-vs-Bird/gopro_004/gt/gt.txt) | 751 | 674 |
+| [gopro_005](annotations/Drone-vs-Bird/gopro_005/gt/gt.txt) | 811 | 810 |
+| [GOPR5842_002](annotations/Drone-vs-Bird/GOPR5842_002/gt/gt.txt) | 612 | 598 |
+| [GOPR5842_005](annotations/Drone-vs-Bird/GOPR5842_005/gt/gt.txt) | 526 | 492 |
+| [GOPR5842_007](annotations/Drone-vs-Bird/GOPR5842_007/gt/gt.txt) | 511 | 480 |
+| [GOPR5844_002](annotations/Drone-vs-Bird/GOPR5844_002/gt/gt.txt) | 497 | 446 |
+| [GOPR5844_004](annotations/Drone-vs-Bird/GOPR5844_004/gt/gt.txt) | 417 | 404 |
+| [GOPR5845_001](annotations/Drone-vs-Bird/GOPR5845_001/gt/gt.txt) | 601 | 540 |
+| [GOPR5845_004](annotations/Drone-vs-Bird/GOPR5845_004/gt/gt.txt) | 391 | 352 |
+| [GOPR5846_002](annotations/Drone-vs-Bird/GOPR5846_002/gt/gt.txt) | 686 | 629 |
+| [GOPR5846_005](annotations/Drone-vs-Bird/GOPR5846_005/gt/gt.txt) | 450 | 379 |
+| [GOPR5847_003](annotations/Drone-vs-Bird/GOPR5847_003/gt/gt.txt) | 496 | 456 |
+| [GOPR5847_004](annotations/Drone-vs-Bird/GOPR5847_004/gt/gt.txt) | 721 | 698 |
+| [GOPR5848_002](annotations/Drone-vs-Bird/GOPR5848_002/gt/gt.txt) | 511 | 501 |
+| [GOPR5848_004](annotations/Drone-vs-Bird/GOPR5848_004/gt/gt.txt) | 691 | 644 |
+| [dji_matrice_210_hillside](annotations/Drone-vs-Bird/dji_matrice_210_hillside/gt/gt.txt) | 1,501 | 1,501 |
+| [dji_matrice_210_mountain](annotations/Drone-vs-Bird/dji_matrice_210_mountain/gt/gt.txt) | 1,495 | 1,420 |
+| [dji_mavick_mountain](annotations/Drone-vs-Bird/dji_mavick_mountain/gt/gt.txt) | 1,475 | 1,435 |
+
+Each `<sequence>/gt/gt.txt` uses the nine-column MOTChallenge ground-truth layout, with one comma-separated row per retained box and no header.
+
+```text
+frame,id,x,y,w,h,confidence,class,visibility
+```
+
+| Field | Value |
+| --- | --- |
+| `frame` | Original zero-based video frame index plus one. Frames keep their full-video numbering through gaps in annotation. |
+| `id` | `0` for the selected UAV, scoped to the sequence. |
+| `x`, `y`, `w`, `h` | Top-left pixel coordinates, width, and height from the retained source box. |
+| `confidence` | `1` marks the row as valid ground truth. |
+| `class` | `1` identifies the UAV in this dataset. |
+| `visibility` | `1` is a placeholder because the source does not provide visibility fractions. |
+
+For example, the first row for `dji_mavick_close_buildings` is `1,0,946,461,36,16,1,1,1`.
 
 #### Demo1
 https://github.com/user-attachments/assets/4f561bf4-6827-4ac1-9a1f-f132981b59ec
