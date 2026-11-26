@@ -181,7 +181,7 @@ The original Drone-vs-Bird dataset provides detection boxes and has no tracking 
 
 1. **Sequence selection.** We manually reviewed the 77 source sequences and selected 20 for single-UAV tracking. The primary criterion was whether one UAV could be followed throughout the sequence. Each selected sequence has at most one UAV box per frame after curation.
 2. **Identity annotation.** We use the original coordinates of the retained UAV boxes and assign track ID `0` within each sequence. The converted files use the MOTChallenge ground-truth layout.
-3. **Depth generation.** We estimate relative depth from the original RGB frames using Depth Anything V2 and apply min–max normalization to `[0, 1]` within each frame. [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2)
+3. **Depth generation.** We estimate relative depth from the original RGB frames using Depth Anything V2 and apply min–max normalization to `[0, 1]` within each sequence. [Depth Anything V2](https://github.com/DepthAnything/Depth-Anything-V2)
 4. **Training and validation.** We use the first half of each sequence for training and the second half for validation because the dataset has no official MOT split.
 
 ### Selected sequences
